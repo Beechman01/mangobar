@@ -1,5 +1,3 @@
-
-
 from fabric.core.fabricator import Fabricator
 from fabric.widgets.box import Box
 from fabric.widgets.image import Image
@@ -8,6 +6,7 @@ from fabric.widgets.eventbox import EventBox
 from fabric.widgets.circularprogressbar import CircularProgressBar
 from fabric.widgets.label import Label
 
+from widgets.animated_circular_progress_bar import AnimatedCircularProgressBar
 
 AUDIO_WIDGET = True
 
@@ -18,11 +17,12 @@ if AUDIO_WIDGET is True:
         AUDIO_WIDGET = False
         print(e)
 
+
 class VolumeWidget(Box):
     def __init__(self, **kwargs):
         self.label = Label(label="0%")
 
-        self.progress_bar = CircularProgressBar(
+        self.progress_bar = AnimatedCircularProgressBar(
             name="volume-progress-bar",
             pie=False,
             child=self.label,
@@ -49,7 +49,6 @@ class VolumeWidget(Box):
             **kwargs,
         )
 
-
     def on_scroll(self, _, event):
         match event.direction:
             case 0:
@@ -62,10 +61,18 @@ class VolumeWidget(Box):
         if not self.audio.speaker:
             return
 
-        self.progress_bar.value = self.audio.speaker.volume / 100
+        self.progress_bar.animate_value(self.audio.speaker.volume / 100)
         self.label.set_label(str(int(self.audio.speaker.volume)) + "%")
-        self.audio.speaker.bind("volume", "value", self.progress_bar, lambda _, v: v / 100)
-        self.audio.speaker.bind("volume", "label", self.label, lambda _, v: str(int(v)) + "%")
+        self.audio.speaker.bind(
+            "volume",
+            "value",
+            self.progress_bar,
+            lambda _, v: self.progress_bar.animate_value(v / 100),
+        )
+        self.audio.speaker.bind(
+            "volume",
+            "label",
+            self.label,
+            lambda _, v: self.label.set_label(str(int(v)) + "%"),
+        )
         return
-
-

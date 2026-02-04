@@ -7,6 +7,7 @@ from fabric.widgets.circularprogressbar import CircularProgressBar
 from fabric.widgets.overlay import Overlay
 from fabric import Fabricator
 
+from widgets.animated_circular_progress_bar import AnimatedCircularProgressBar
 
 
 class Cpu(Box):
@@ -22,21 +23,9 @@ class Cpu(Box):
 
         self.title = CenterBox(
             orientation="v",
-            start_children=[
-                Label(
-                    label="---"
-                )
-            ],
-            center_children=[
-                Label(
-                    label="CPU"
-                )
-            ],
-            end_children=[
-                Label(
-                    label="---"
-                )
-            ]
+            start_children=[Label(label="---")],
+            center_children=[Label(label="CPU")],
+            end_children=[Label(label="---")],
         )
 
         self.usage = Box(
@@ -48,35 +37,39 @@ class Cpu(Box):
                             name="circle-progress-back",
                             pie=False,
                             size=34,
-                            line_width=4,
+                            # line_width=4,
                             value=100,
                         ),
                     ],
                     overlays=[
-                        CircularProgressBar(
+                        AnimatedCircularProgressBar(
                             name="cpu-progress-bar",
                             pie=False,
                             size=34,
-                            line_width=4,
+                            # line_width=4,
                             child=Label(
                                 name="cpu",
                             ).build(
                                 lambda progress: Fabricator(
                                     interval=1000,
                                     poll_from=lambda f: psutil.cpu_percent(),
-                                    on_changed=lambda _, value: progress.set_label(f"{str(int(value))}%"),
+                                    on_changed=lambda _, value: progress.set_label(
+                                        f"{str(int(value))}%"
+                                    ),
                                 )
-                            )
+                            ),
                         ).build(
                             lambda progress: Fabricator(
                                 interval=1000,
-                                poll_from=lambda f: psutil.cpu_percent()/100,
-                                on_changed=lambda _, value: progress.set_value(value),
+                                poll_from=lambda f: psutil.cpu_percent() / 100,
+                                on_changed=lambda _, value: progress.animate_value(
+                                    value
+                                ),
                             )
                         )
-                    ]
+                    ],
                 )
-            ]
+            ],
         )
 
         self.ram = Box(
@@ -93,7 +86,7 @@ class Cpu(Box):
                         ),
                     ],
                     overlays=[
-                        CircularProgressBar(
+                        AnimatedCircularProgressBar(
                             name="ram-progress-bar",
                             pie=False,
                             size=34,
@@ -104,26 +97,49 @@ class Cpu(Box):
                                 lambda progress: Fabricator(
                                     interval=1000,
                                     poll_from=lambda f: psutil.virtual_memory().percent,
-                                    on_changed=lambda _, value: progress.set_label(f"{str(int(value))}%"),
+                                    on_changed=lambda _, value: progress.set_label(
+                                        f"{str(int(value))}%"
+                                    ),
                                 )
-                            )
+                            ),
                         ).build(
                             lambda progress: Fabricator(
                                 interval=1000,
-                                poll_from=lambda f: psutil.virtual_memory().percent/100,
-                                on_changed=lambda _, value: progress.set_value(value),
+                                poll_from=lambda f: psutil.virtual_memory().percent
+                                / 100,
+                                on_changed=lambda _, value: progress.animate_value(
+                                    value
+                                ),
                             )
                         )
-                    ]
+                    ],
                 )
-            ]
+            ],
+        )
+
+        self.temp = Label(
+            name="temp",
+        ).build(
+            lambda temp: Fabricator(
+                interval=1000,
+                poll_from=lambda f: self.getCpuTemp(),
+                on_changed=lambda _, value: temp.set_label(f"{str(value)}°C"),
+            )
         )
 
         self.children = Box(
             orientation="v",
+            spacing=8,
             children=[
                 self.ram,
                 self.usage,
+                self.temp,
                 self.title,
-            ]
+            ],
         )
+
+    def getCpuTemp(self):
+        sensors = psutil.sensors_temperatures()
+        temp = sensors["k10temp"][0][1]
+
+        return int(temp)
