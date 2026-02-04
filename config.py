@@ -1,3 +1,4 @@
+import sys
 import psutil
 from fabric import Application, Fabricator
 from fabric.widgets.box import Box
@@ -12,11 +13,15 @@ from fabric.utils import FormattedString, get_relative_path, bulk_replace
 
 from modules.audio import VolumeWidget
 from modules.audio import AUDIO_WIDGET
+from modules.media import MediaWidget
+from modules.media import MEDIA_WIDGET
 from modules.time import Time
 from modules.date import Date
 from modules.cpu import Cpu
 from modules.gpu import Gpu
 from modules.tags import Tags
+from modules.layout import Layout
+from modules.uptime import Uptime
 
 
 class StatusBar(Window):
@@ -30,18 +35,10 @@ class StatusBar(Window):
             monitor=monitor,
             title="MangoBar",
             anchor="top left bottom",
-            margin="10px 10px 10px 10px",
+            margin="9px 0px 9px 5px",
             exclusivity="auto",
             # h_align="center",
             visible=False,
-        )
-
-        self.system_status = Box(
-            name="system-status",
-            spacing=4,
-            orientation="v",
-            children=[
-            ]
         )
 
         self.children = CenterBox(
@@ -52,9 +49,11 @@ class StatusBar(Window):
                 name="start-container",
                 orientation="v",
                 h_align="center",
+                spacing=5,
                 children=[
+                    Layout(),
                     Tags(),
-                ]
+                ],
             ),
             center_children=Box(
                 name="center-container",
@@ -64,19 +63,19 @@ class StatusBar(Window):
                     Cpu(),
                     Time(),
                     Gpu(),
-                    # Date()
-                ]
+                ],
             ),
             end_children=Box(
                 name="end-container",
-                spacing=4,
+                spacing=8,
                 orientation="v",
                 h_align="center",
                 children=[
+                    MediaWidget() if MEDIA_WIDGET else None,
                     SystemTray(name="system-tray", spacing=4),
-                    self.system_status,
                     VolumeWidget(),
-               ],
+                    Uptime(),
+                ],
             ),
         )
 
@@ -84,7 +83,8 @@ class StatusBar(Window):
 
 
 if __name__ == "__main__":
-    bar = StatusBar(1)
+    monitor = 1
+    bar = StatusBar(monitor)
     app = Application("mangobar", bar)
     app.set_stylesheet_from_file(get_relative_path("./style.css"))
 
