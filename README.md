@@ -8,7 +8,7 @@ A feature-rich status bar for Wayland compositors built with the Fabric framewor
 - **GPU Monitoring**: NVIDIA GPU usage and temperature monitoring (requires `nvidia-smi`)
 - **Spotify Media Widget**: Dynamic album art, playback progress, and play/pause controls
 - **Audio Control**: Volume control with mouse wheel scroll support
-- **Workspace Management**: Hyprland workspace switching and layout display
+- **Workspace Management**: Mango workspace switching and layout display
 - **System Info**: Date, time, and uptime displays
 - **Multi-Monitor Support**: Run separate instances on different monitors
 
@@ -20,7 +20,7 @@ A feature-rich status bar for Wayland compositors built with the Fabric framewor
 
 ### System Dependencies
 - Python 3.10 or higher
-- Wayland compositor (tested with Hyprland)
+- Wayland compositor (tested with Mango)
 - `playerctl` (for media widget)
 - `nvidia-smi` (optional, for GPU monitoring)
 
@@ -46,26 +46,6 @@ pip install fabric psutil PyGObject pynvml
 3. Install system dependencies (Arch Linux):
 ```bash
 sudo pacman -S playerctl python-gobject gtk3
-```
-
-## Usage
-
-### Basic Usage
-Run on the default monitor:
-```bash
-python config.py
-```
-
-Run on a specific monitor (e.g., monitor 2):
-```bash
-python config.py 2
-```
-
-### Autostart with Hyprland
-Add to your `~/.config/hypr/hyprland.conf`:
-```bash
-exec-once = python /path/to/mangobar/config.py
-exec-once = python /path/to/mangobar/config.py 2  # For second monitor
 ```
 
 ## Customization
