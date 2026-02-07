@@ -1,18 +1,30 @@
+import os
 from fabric.widgets.eventbox import EventBox
-from fabric.widgets.label import Label
+from fabric.widgets.image import Image
 
 
 class ThemeSwitcher(EventBox):
     """Widget to switch between themes via button click."""
 
-    def __init__(self, theme_manager, icon="", **kwargs):
+    def __init__(self, theme_manager, icon_size=32, **kwargs):
         self.theme_manager = theme_manager
+        self.icon_size = icon_size
 
-        self.label = Label(label=icon, name="theme-switcher-label")
+        # Get the base directory and icon path
+        self.base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        self.icon_path = os.path.join(
+            self.base_dir, "assets", "icons", "theme-switcher.svg"
+        )
+
+        self.image = Image(
+            image_file=self.icon_path,
+            pixel_size=self.icon_size,
+            name="theme-switcher-image",
+        )
 
         super().__init__(
             name="theme-switcher",
-            child=self.label,
+            child=self.image,
             on_button_press_event=self.on_click,
             tooltip_text=self._format_tooltip(theme_manager.get_current_theme()),
             **kwargs,

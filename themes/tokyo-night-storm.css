@@ -204,7 +204,6 @@ tooltip>* {
     padding: 3px;
 }
 
-#theme-switcher-label {
-    font-size: 26px;
+#theme-switcher-image {
     color: var(--tokyo-purple);
 }

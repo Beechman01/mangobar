@@ -68,8 +68,8 @@ class StatusBar(Window):
                     MediaWidget() if MEDIA_WIDGET else None,
                     SystemTray(name="system-tray", spacing=4, orientation="v"),
                     VolumeWidget(),
-                    # Icon options: 󰏘 󰌁   󰃟  󰔎  󰌆 
-                    ThemeSwitcher(theme_manager, icon="󰏘"),
+                    # icon_size options: 28, 32 (default), 36, 40
+                    ThemeSwitcher(theme_manager, icon_size=32),
                     Uptime(),
                 ],
             ),
