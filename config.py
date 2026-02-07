@@ -45,7 +45,7 @@ class StatusBar(Window):
                 h_align="center",
                 spacing=5,
                 children=[
-                    Layout(),
+                    Layout(theme_manager=theme_manager),
                     Tags(),
                 ],
             ),
