@@ -1,22 +1,13 @@
-import sys
-import psutil
-from fabric import Application, Fabricator
+from fabric import Application
 from fabric.widgets.box import Box
-from fabric.widgets.image import Image
-from fabric.widgets.eventbox import EventBox
-from fabric.widgets.datetime import DateTime
 from fabric.widgets.centerbox import CenterBox
 from fabric.system_tray.widgets import SystemTray
-from fabric.widgets.circularprogressbar import CircularProgressBar
 from fabric.widgets.wayland import WaylandWindow as Window
-from fabric.utils import FormattedString, get_relative_path, bulk_replace
 
 from modules.audio import VolumeWidget
-from modules.audio import AUDIO_WIDGET
 from modules.media import MediaWidget
 from modules.media import MEDIA_WIDGET
 from modules.time import Time
-from modules.date import Date
 from modules.cpu import Cpu
 from modules.gpu import Gpu
 from modules.tags import Tags
@@ -77,7 +68,7 @@ class StatusBar(Window):
                     MediaWidget() if MEDIA_WIDGET else None,
                     SystemTray(name="system-tray", spacing=4, orientation="v"),
                     VolumeWidget(),
-                    ThemeSwitcher(theme_manager, icon=""),
+                    ThemeSwitcher(theme_manager, icon="󰏘"),
                     Uptime(),
                 ],
             ),

@@ -201,10 +201,10 @@ tooltip>* {
 
 /* theme switcher */
 #theme-switcher {
-    font-size: 18px;
     padding: 3px;
 }
 
 #theme-switcher-label {
+    font-size: 20px;
     color: var(--tokyo-purple);
 }
