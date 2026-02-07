@@ -1,0 +1,205 @@
+:vars {
+    /* Catppuccin Mocha Palette */
+    --ctp-rosewater: #f5e0dc;
+    --ctp-flamingo: #f2cdcd;
+    --ctp-pink: #f5c2e7;
+    --ctp-mauve: #cba6f7;
+    --ctp-red: #f38ba8;
+    --ctp-maroon: #eba0ac;
+    --ctp-peach: #fab387;
+    --ctp-yellow: #f9e2af;
+    --ctp-green: #a6e3a1;
+    --ctp-teal: #94e2d5;
+    --ctp-sky: #89dceb;
+    --ctp-sapphire: #74c7ec;
+    --ctp-blue: #89b4fa;
+    --ctp-lavender: #b4befe;
+    --ctp-text: #cdd6f4;
+    --ctp-subtext1: #bac2de;
+    --ctp-subtext0: #a6adc8;
+    --ctp-overlay2: #9399b2;
+    --ctp-overlay1: #7f849c;
+    --ctp-overlay0: #6c7086;
+    --ctp-surface2: #585b70;
+    --ctp-surface1: #45475a;
+    --ctp-surface0: #313244;
+    --ctp-base: #1e1e2e;
+    --ctp-mantle: #181825;
+    --ctp-crust: #11111b;
+
+    /* Element Colors */
+    --text-color: var(--ctp-text);
+    --border-color: var(--ctp-lavender);
+    --background-color: rgba(30, 30, 46, 0.6);
+    --module-background: var(--ctp-surface0);
+    --active-workspace-button: var(--ctp-surface1);
+    --hover-workspace-button: var(--ctp-teal);
+    --urgent-workspace-button: var(--ctp-red);
+    --active-workspace-tag: var(--ctp-mauve);
+    --occupied-workspace-tag: var(--ctp-pink);
+    --empty-workspace-button: var(--ctp-surface0);
+    --progress-bar-color: var(--ctp-overlay0);
+    --progress-bar-back: var(--ctp-overlay0);
+    --progress-bar-value-color: var(--ctp-mauve);
+}
+
+* {
+    /* unset so we can style everything from the ground up. */
+    all: unset;
+
+    /* text color */
+    color: var(--text-color); 
+    font-weight: 900;
+    font-family: "Terminess Nerd Font Mono";
+    border-radius: 9px;
+}
+
+#bar-inner {
+    /* color: var(--text-color);  */
+    padding: 6px;
+    border: solid 3px;
+    border-color: var(--border-color);
+    background-color: var(--background-color);
+    min-height: 28px;
+}
+
+
+#circle-progress-back {
+    border-color: var(--progress-bar-back);
+    /* background-color: transparent; */ 
+    color: var(--progress-bar-back);
+}
+
+#gpu-progress-bar,
+#vram-progress-bar,
+#cpu-progress-bar,
+#ram-progress-bar,
+#volume-progress-bar,
+#media-progress-bar {
+    color: transparent;
+    border-color: var(--progress-bar-value-color);
+    /* background-color: transparent; */
+    font-size: 16px;
+}
+
+#uptime {
+    font-size: 18px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+#media-thumbnail {
+    border-radius: 17px;
+    min-width: 34px;
+    min-height: 34px;
+    -gtk-icon-transform: scale(0.75);
+}
+
+#media-status-icon {
+    margin-top: 18px;
+    margin-left: 18px;
+    opacity: 0.9;
+}
+
+#layout {
+    font-size: 18px;
+    padding: 3px;
+    color: var(--ctp-mauve);
+}
+
+#layout-image {
+    color: var(--ctp-mauve);
+}
+
+#clock {
+    font-size: 18px;
+    /* background-color: var(--module-background); */
+    padding: 0px 8px;
+}
+
+menu>menuitem>label,
+#date-time>label,
+#hyprland-language>label,
+#hyprland-window>label {
+    font-weight: 900;
+}
+
+/* tags widget */
+#tag-button {
+    padding: 0px;
+    background-color: var(--active-workspace-button);
+    border: 4px solid var(--active-workspace-button);
+    border-radius: 23px;
+    font-size: 1px;
+    min-width: 22px;
+    min-height: 22px;
+}
+
+#tag-button.active {
+    background-color: var(--active-workspace-tag);
+    border: 4px solid var(--active-workspace-tag);
+    border-radius: 23px;
+    font-size: 1px;
+    min-height: 48px;
+}
+
+#tag-button.occupied {
+    font-size: 1px;
+    border: 4px solid var(--occupied-workspace-tag);
+}
+
+/* system tray */
+#system-tray {
+    padding: 2px 4px;
+    background-color: var(--module-background);
+}
+
+/* menu and menu items (written for the system tray) */
+menu {
+    border: solid 2px;
+    border-radius: 10px;
+    border-color: var(--border-color);
+    background-color: var(--background-color);
+}
+
+menu>menuitem {
+    border-radius: 0px;
+    background-color: var(--module-background);
+    padding: 6px;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+menu>menuitem:first-child {
+    margin-top: 1px;
+    border-radius: 8px 8px 0px 0px;
+}
+
+menu>menuitem:last-child {
+    margin-bottom: 1px;
+    border-radius: 0px 0px 8px 8px;
+}
+
+menu>menuitem:hover {
+    background-color: var(--active-workspace-button);
+}
+
+tooltip {
+    border: solid 2px;
+    border-color: var(--border-color);
+    background-color: var(--background-color);
+}
+
+tooltip>* {
+    padding: 2px 4px;
+}
+
+/* theme switcher */
+#theme-switcher {
+    font-size: 18px;
+    padding: 3px;
+}
+
+#theme-switcher-label {
+    color: var(--ctp-mauve);
+}

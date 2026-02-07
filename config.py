@@ -22,12 +22,15 @@ from modules.gpu import Gpu
 from modules.tags import Tags
 from modules.layout import Layout
 from modules.uptime import Uptime
+from modules.theme_switcher import ThemeSwitcher
+from services.theme_manager import ThemeManager
 
 
 class StatusBar(Window):
     def __init__(
         self,
         monitor,
+        theme_manager,
     ):
         super().__init__(
             name="mangobar",
@@ -74,6 +77,7 @@ class StatusBar(Window):
                     MediaWidget() if MEDIA_WIDGET else None,
                     SystemTray(name="system-tray", spacing=4, orientation="v"),
                     VolumeWidget(),
+                    ThemeSwitcher(theme_manager, icon=""),
                     Uptime(),
                 ],
             ),
@@ -84,8 +88,15 @@ class StatusBar(Window):
 
 if __name__ == "__main__":
     monitor = 1
-    bar = StatusBar(monitor)
-    app = Application("mangobar", bar)
-    app.set_stylesheet_from_file(get_relative_path("./style.css"))
+    app = Application("mangobar")
+
+    # Create ThemeManager before StatusBar
+    theme_manager = ThemeManager(app)
+
+    # Create StatusBar with theme_manager
+    bar = StatusBar(monitor, theme_manager)
+
+    # Load saved theme (or default)
+    theme_manager.load_saved_theme()
 
     app.run()
