@@ -74,6 +74,9 @@ class MediaWidget(Box):
             poll_from=lambda f: self.update_position(),
         )
 
+        # Set no_show_all to prevent show_all() from making widget visible
+        self.set_no_show_all(True)
+
         self.setup_manager()
 
     def setup_manager(self):
@@ -156,6 +159,9 @@ class MediaWidget(Box):
 
     def update_position(self):
         if not self.player:
+            # Ensure widget is hidden when no player exists
+            if self.get_visible():
+                self.set_visible(False)
             return
 
         try:

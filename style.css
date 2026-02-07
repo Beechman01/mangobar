@@ -89,6 +89,8 @@
 
 #uptime {
     font-size: 18px;
+    padding-bottom: 5px;
+    padding-top: 5px;
 }
 
 #media-thumbnail {
@@ -106,7 +108,12 @@
 
 #layout {
     font-size: 18px;
-    padding: 5px;
+    padding: 3px;
+    color: var(--tokyo-purple);
+}
+
+#layout-image {
+    color: var(--tokyo-purple);
 }
 
 #clock {

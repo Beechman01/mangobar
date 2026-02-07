@@ -72,7 +72,7 @@ class StatusBar(Window):
                 h_align="center",
                 children=[
                     MediaWidget() if MEDIA_WIDGET else None,
-                    SystemTray(name="system-tray", spacing=4),
+                    SystemTray(name="system-tray", spacing=4, orientation="v"),
                     VolumeWidget(),
                     Uptime(),
                 ],

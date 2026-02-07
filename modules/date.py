@@ -10,6 +10,7 @@ def seperator(sep):
         label=sep,
     )
 
+
 class Date(CenterBox):
     def __init__(
         self,
@@ -17,27 +18,23 @@ class Date(CenterBox):
         super().__init__(
             orientation="v",
         )
-        self.day=DateTime(
+        self.day = DateTime(
             name="day",
             formatters="%d",
         )
-        self.month=DateTime(
+        self.month = DateTime(
             name="month",
             formatters="%m",
         )
-        self.year=DateTime(
-            name="year",
-            formatters="%y"
-        )
-        self.start_children=[
+        self.year = DateTime(name="year", formatters="%y")
+        self.start_children = [
             self.day,
             seperator("-"),
         ]
-        self.center_children=[
+        self.center_children = [
             self.month,
             seperator("-"),
         ]
-        self.end_children=[
+        self.end_children = [
             self.year,
         ]
-
